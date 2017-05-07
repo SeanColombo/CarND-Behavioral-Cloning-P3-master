@@ -31,15 +31,16 @@ X_train = np.array(images)
 y_train = np.array(measurements)
 
 from keras.models import Sequential
-from keras.layers import Flatten,Dense
+from keras.layers import Flatten,Dense,Lambda
 model = Sequential()
-model.add(Flatten(input_shape=(160,320,3)))
+model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+model.add(Flatten())
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
 # Default data:
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=7)
-# My data seems to learn for longer.
+# My early data (before the Lambda layer) seemed to continue learning for about 20 epochs
 #model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=20)
 
 output_file = 'model_'+INPUT_DIR+'.h5'
