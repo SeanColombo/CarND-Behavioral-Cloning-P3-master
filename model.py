@@ -23,9 +23,11 @@ import matplotlib.pyplot as plt
 #   python video.py run1 --fps 48
 #
 #
+# TODO: Generators like in Lesson 12-17 so that it doesn't have to try to load all of the images into memory at once.
+# TODO: When my graphics card gets here, make sure that's actually being used.
 # TODO: Do a "recovery" lap in each direction (when heading around the track in either direction)... only record the correction, not the initial driving to the edge.
-# TODO: Generators like in Lesson 12-17
 # TODO: Add dropout layers to prevent overfitting (it's in the rubric!)
+# TODO: Read tips in the PDF.
 #
 #
 # IF WE GET STUCK:
@@ -44,6 +46,7 @@ INPUT_DIR = "seandata_long" # Me, driving twice in each direction. This removes 
 #   Backwards Lap
 #   Lap
 #   Backwards Lap
+#   Trained another forward pass at just that spot near the dirt-road tire-trap area after the bridge.
 
 
 lines = []
