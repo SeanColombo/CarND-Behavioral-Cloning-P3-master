@@ -30,14 +30,29 @@ import matplotlib.pyplot as plt
 #     This doesn't seem to have created any additional failure. It doesn't drive QUITE as well, but it fails near the same spot... actually it gets past the dirt
 #     trap by a very slight amount before exiting the track.  I'll probably continue the project at this speed. It is also the speed at which most of my data
 #     has been trained. FWIW: I tried setting it higher too, and that doesn't seem to be an option. The controller sets a "governor" at around 30mph.
+#   - Loss & val loss are both around 0.02X at this point, but the car doesn't make it around the track yet.
+#   - Got more data for training the recovery laps.  Tried 5 epochs. 2 was almost as good (training loss was better on 5, but val loss was same).
+#   - After adding recovery laps & 5 epochs, the car now goes around the track indefinitely!  It touches the red/white checks at some points (after dirt trap & during the next turn).
+#     Interestingly, adding the recovery training actually made most of the driving more wobbly instead of cruising smoothly in the center of the lane, but the overall performance is way more effective.
+#   - There are exactly two challenging spots left. I'm going to train more recovery info for those types of cases, BEFORE getting into the problem to help avoid it.
+#   - NOTE: All of my recovery training appears to increase Loss, but that's fairly expected. The smooth driving was done at the beginning.
+#   - After the additional recovery training (catching cases I didn't get in my Recovery Laps) I realized that epochs were still making progress at more epochs, however the model started to over-fit.
+#     I experimented with adding an additional dropout layer between the last two fully-connected layers (which seemed dangerous because there is only one output) and with increasing the number of epochs to 7 or 10. This
+#     was able to slightly improve the loss numbers but made my car drive worse (and even get stuck in one spot). As long as the training and val loss look reasonable, I think I'll stick with judging based on
+#     performance on the track.
+#
 # 
 # Current Data in seandata_long:
 #   Lap
 #   Backwards Lap
 #   Lap
 #   Backwards Lap
-#   Trained another forward pass at just that spot near the dirt-road tire-trap area after the bridge.
-#   Trained a forward and backward pass at the dirt trap. This time at around 9 or 10 mph. Most training had been done at 30mph.
+#   Trained a bit near dirt-road tire-trap forward
+#   Trained a bit near dirt-road tire-trap forward (9-10 mph)
+#   Trained a bit near dirt-road tire-trap backwards (9-10 mph)
+#   Trained recovery lap forward
+#   Trained recovery lap backwards
+#   Trained recovery near two bad spots (block after dirt trap & end of the next right turn) forward. About 3 approaches to each area.
 #
 #
 # USAGE:
@@ -52,8 +67,9 @@ import matplotlib.pyplot as plt
 #
 #
 #
-# TODO: Do a "recovery" lap in each direction (when heading around the track in either direction)... only record the correction, not the initial driving to the edge.
 # TODO: Read tips in the PDF.
+#   - Tip: "Resize the input image. I was able to size the image down by 2, reducing the number of pixels by 4. This really helped speed up model training and did not seem to impact the accuracy."
+#   - Tip: It says he needed 40k samples. At 6,400 I'm doing laps (but touching the red/white checks in two spots).
 #
 #
 # IF WE GET STUCK:
@@ -159,6 +175,7 @@ model.add(Dropout(DROP_RATE))
 model.add(Dense(50))
 model.add(Dropout(DROP_RATE))
 model.add(Dense(10))
+#model.add(Dropout(DROP_RATE))
 model.add(Dense(1))
 
 
@@ -171,7 +188,7 @@ model.compile(loss='mse', optimizer='adam')
 history_object = model.fit_generator(train_generator, samples_per_epoch=len(train_samples), \
                                      validation_data=validation_generator, \
                                      nb_val_samples=len(validation_samples), \
-                                     nb_epoch=1, verbose=1)
+                                     nb_epoch=5, verbose=1)
 
 #output_file = 'model_'+INPUT_DIR+'.h5'
 output_file = "model.h5" # the project defines this as the required output filename convention
