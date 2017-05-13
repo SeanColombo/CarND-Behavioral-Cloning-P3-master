@@ -10,7 +10,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[centercam]: ./examples/center_drivingCounterClockwise.jpg "Center Camera"
+[centercam]: ./examples/center_drivingCounterclockwise.jpg "Center Camera"
 [backwards]: ./examples/center_drivingClockwise.jpg "Center Camera - driving backwards"
 
 ## Rubric Points
