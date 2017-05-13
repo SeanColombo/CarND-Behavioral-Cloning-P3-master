@@ -10,8 +10,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[centercam]: ./examples/center_drivingCounterClockwise.png "Center Camera"
-[backwards]: ./examples/center_drivingClockwise.png "Center Camera - driving backwards"
+[centercam]: ./examples/center_drivingCounterClockwise.jpg "Center Camera"
+[backwards]: ./examples/center_drivingClockwise.jpg "Center Camera - driving backwards"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
