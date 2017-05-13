@@ -104,16 +104,17 @@ The simulator car has 3 cameras mounted on it, and one way to add additional rec
 As I trained more info into my training-set, I kept a log of what I'd trained.  Unless otherwise noted, all of the training data was done at full-speed (30mph).  Early in the testing, I modified drive.py on line 47 to `set_speed=30` to make the car go faster. This made my test-laps much faster and it made the car less boring & closer to a speed that I percieved was a "realistic" speed for training a car to drive.  The controller does not allow the speed to go above 30mph (I tried that) so I left it at 30 which is also the max-speed when manually driving in the simulator.  Testing showed that my results were very similar for the default 9mph and for 30mph so I did the remainder of the project at this speed.
 
 Here is the data in the final training set that I used. There were around 6,500 datapoints (rows in the .csv file):
-#   Lap
-#   Backwards Lap
-#   Lap
-#   Backwards Lap
-#   Trained a bit near dirt-road tire-trap forward
-#   Trained a bit near dirt-road tire-trap forward (9-10 mph)
-#   Trained a bit near dirt-road tire-trap backwards (9-10 mph)
-#   Trained recovery lap forward
-#   Trained recovery lap backwards
-#   Trained recovery near two bad spots (block after dirt trap & end of the next right turn) forward. About 3 approaches to each area.
+
+* Lap
+* Backwards Lap
+* Lap
+* Backwards Lap
+* Trained a bit near dirt-road tire-trap forward
+* Trained a bit near dirt-road tire-trap forward (9-10 mph)
+* Trained a bit near dirt-road tire-trap backwards (9-10 mph)
+* Trained recovery lap forward
+* Trained recovery lap backwards
+* Trained recovery near two bad spots (block after dirt trap & end of the next right turn) forward. About 3 approaches to each area.
 
 Adding dropout between fully-connected layers generalized the network a bit and made the driving smoother. Adding the recovery training data made much of the driving a bit more wobbly, but made the car able to recover much better & not drive off the track.  The two trouble-areas probably were under-represented in my recovery-lap training (which consisted of me driving near an edge, then starting the recording, driving a "recovery" back to the center of a lane, then stopping-recordinge & saving the training data) so I added additional recovery near those two trouble-spots.
 
